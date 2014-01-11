@@ -1,0 +1,19 @@
+<div class="container">
+<h1>Listing collaborators</h1>
+</div>
+ 
+<div class="container">
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Unique Token</th>
+  </tr>
+ 
+  <% @collaborators.each do |c| %>
+    <tr>
+      <td><%= c.email %></td>
+      <td><%= c.unique_token %></td>
+    </tr>
+  <% end %>
+</table>
+</div>

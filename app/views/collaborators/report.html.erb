@@ -1,0 +1,15 @@
+<div class="container">
+<h1>Weekly report for <%= @collaborator %></h1>
+</div>
+
+<div class="container">
+<table>
+	<% @moods.each do |m| %>
+    <tr>
+      <td><%= m.collaborator.id %></td>
+      <td><%= m.date %></td>
+      <td><%= m.rating %></td>
+    </tr>
+  <% end %>
+</table>
+</div>
