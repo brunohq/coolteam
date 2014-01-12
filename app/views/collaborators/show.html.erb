@@ -6,18 +6,27 @@
 
 <%= form_for([@collaborator, @collaborator.moods.build]) do |f| %>
   <p>
-    <%= f.label :rating %><br />
-    <%= f.select :rating, options_for_select(%w[contente okay preocupado triste]) %>
+    <%= f.hidden_field :rating %>
+    <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => "change_mood") %>
+    <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => "change_mood")  %>
+    <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => "change_mood")   %>
+    <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => "change_mood")   %>
+
 
   </p>
 
   <p>
-    <%= f.label :comment %><br />
-    <%= f.text_field :comment %>
-  </p>
-
-  <p>
-    <%= f.submit %>
+    <%= f.submit "Super!", class: "btn btn-lg btn-default "  %>
   </p>
 <% end %>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    $(".change_mood").click(function(e) {
+      e.preventDefault();
+      $("#mood_rating").val($(this).attr("href"))
+    });
+  });
+</script>
+
