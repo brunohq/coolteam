@@ -1,14 +1,15 @@
 <div class="container">
-<h1>Weekly report for <%= @collaborator %></h1>
+<h1>Weekly report from <%= @monday.strftime('%d %b') %> to <%= @friday.strftime('%d %b') %></h1>
 </div>
 
 <div class="container">
 <table>
-	<% @moods.each do |m| %>
+	<% @moods.each do |day| %>
     <tr>
-      <td><%= m.collaborator.id %></td>
-      <td><%= m.date %></td>
-      <td><%= m.rating %></td>
+      <td><%= day[0] %></td>
+	  <% day[1].each do |m| %>
+      	<td>| <%= image_tag("legocons/" + m.rating + ".png", alt: m.rating)  %> </td>
+	  <% end %>
     </tr>
   <% end %>
 </table>

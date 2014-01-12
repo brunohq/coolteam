@@ -44,9 +44,12 @@ class CollaboratorsController < ApplicationController
   end
 
   def report
-    cols = Group.find(session[:group]).collaborators
-    cols.each do |c|
-      @moods << c.moods
+    d = Date.today
+    @monday = d.at_beginning_of_week
+    @friday = @monday + 4.days
+    @moods = Hash.new
+    (@monday..@friday).each do |date| 
+      @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => session[:group]).where(:date => date)
     end
   end
 
