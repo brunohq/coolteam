@@ -1,4 +1,5 @@
 class Collaborator < ActiveRecord::Base
+  belongs_to :group
   has_many :moods
   attr_accessible :email, :unique_token
   before_create :assign_unique_token

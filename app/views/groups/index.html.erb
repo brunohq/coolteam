@@ -1,0 +1,21 @@
+<div class="container">
+<h1>Listing groups</h1>
+</div>
+ 
+<div class="container">
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>People</th>
+  </tr>
+ 
+  <% @groups.each do |g| %>
+    <tr>
+      <td><%= g.id %></td>
+      <td><%= g.title %></td>
+      <td><%= g.collaborators.count %></td>
+    </tr>
+  <% end %>
+</table>
+</div>

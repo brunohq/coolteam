@@ -1,11 +1,14 @@
 Coolteam::Application.routes.draw do
   #get "pages/home"
+  resources :groups
+
   resources :collaborators do
     get :report, :on => :collection
     resources :moods
   end
 
   get '/c/:unique_token', to: 'collaborators#show', as: :login
+  get '/g/:title', to: 'groups#show', as: :admin_login
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

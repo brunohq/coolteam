@@ -11,13 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140107120503) do
+ActiveRecord::Schema.define(:version => 20140112000552) do
 
   create_table "collaborators", :force => true do |t|
     t.string   "email"
     t.string   "unique_token"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "group_id"
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "moods", :force => true do |t|

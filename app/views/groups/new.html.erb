@@ -1,0 +1,16 @@
+<div class="container">
+<h1>New Group</h1>
+</div>
+
+<div class="container">
+<%= form_for :group, url: groups_path do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+</div>
