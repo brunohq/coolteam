@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h3>Tas a dever:</h3>
+
+  <p>
+  <% @user.payments.missing.each do |payment| %>  
+    <span style="color:#FF0000;"><%= payment.bill.partial_value %> €</span> de <%= link_to payment.bill.title, bill_url(payment.bill) %> (<b><%= payment.bill.billing_date.strftime('%d %b, %Y') %></b>)
+    <br />
+  <% end %>
+  <p>
+
+    <h3>Instruções:</h3>
+    <p>
+      1. Deixa o dinheirinho que deves na caixa <br/>
+      2. Marca a factura como paga no site: <%= link_to root_url, root_url %>
+    </p>
+  </body>
+</html>
