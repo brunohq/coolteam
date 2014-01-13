@@ -16,17 +16,31 @@
   </p>
 
   <p>
-    <%= f.submit "Super!", class: "btn btn-lg btn-default "  %>
+    <%= f.submit "Actualizar!", class: "btn btn-lg btn-default "  %>
   </p>
 <% end %>
 </div>
 
 <script type="text/javascript">
   $(function() {
-    $(".change_mood").click(function(e) {
+    $("a.change_mood").click(function(e) {
       e.preventDefault();
+      $('a.change_mood').css('background', 'transparent');
+      $(this).css("background-color", "#5cb85c");
       $("#mood_rating").val($(this).attr("href"))
     });
   });
 </script>
 
+<style type="text/css">
+
+a.change_mood {
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 8.5em;
+}
+  
+</style>
