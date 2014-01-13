@@ -1,7 +1,11 @@
 class CollaboratorsController < ApplicationController
 
   def index
-    @collaborators = Group.find(session[:group_admin]).collaborators
+    if session[:admin].present?
+      @collaborators = Group.find(session[:admin]).collaborators
+    else
+      redirect_to root_path
+    end
   end
 
   def show
@@ -15,24 +19,36 @@ class CollaboratorsController < ApplicationController
 	end
 
 	def create
-	  @collaborator = Collaborator.new(params[:collaborator])
-    @collaborator.group_id = session[:group]
-	  @collaborator.save
-	  redirect_to action: "index"
+    if session[:admin].present?
+  	  @collaborator = Collaborator.new(params[:collaborator])
+      @collaborator.group_id = session[:admin]
+  	  @collaborator.save
+  	  redirect_to action: "index"
+    else
+      redirect_to root_path
+    end
 	end
 
   def edit
-    @collaborator = Collaborator.find(params[:id])
+    if session[:admin].present?
+      @collaborator = Collaborator.find(params[:id])
+    else
+      redirect_to root_path
+    end
   end
 
   def change_email
-    @collaborator = Collaborator.find(params[:id])
-    @collaborator.email = params[:collaborator][:email]
+    if session[:admin].present?
+      @collaborator = Collaborator.find(params[:id])
+      @collaborator.email = params[:collaborator][:email]
 
-    if @collaborator.save
-      redirect_to collaborators_path
+      if @collaborator.save
+        redirect_to collaborators_path
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      redirect_to root_path
     end
   end
 
@@ -44,12 +60,16 @@ class CollaboratorsController < ApplicationController
   end
 
   def report
-    d = Date.today
-    @monday = d.at_beginning_of_week
-    @friday = @monday + 4.days
-    @moods = Hash.new
-    (@monday..@friday).each do |date| 
-      @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => session[:group]).where(:date => date)
+    if session[:group].present?
+      d = Date.today
+      @monday = d.at_beginning_of_week
+      @friday = @monday + 4.days
+      @moods = Hash.new
+      (@monday..@friday).each do |date| 
+        @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => session[:group]).where(:date => date)
+      end
+    else
+      redirect_to root_path
     end
   end
 

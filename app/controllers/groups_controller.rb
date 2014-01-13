@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find_by_title(params[:title])
-    session[:group_admin] = @group.id
+    session[:admin] = @group.id
 
     redirect_to collaborators_path
   end
