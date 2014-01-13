@@ -22,8 +22,11 @@ class CollaboratorsController < ApplicationController
     if cookies.signed[:admin].present?
   	  @collaborator = Collaborator.new(params[:collaborator])
       @collaborator.group_id = cookies.signed[:admin]
-  	  @collaborator.save
-  	  redirect_to action: "index"
+  	  if @collaborator.save
+    	  redirect_to action: "index"
+      else
+        render 'new'
+      end
     else
       redirect_to root_path
     end

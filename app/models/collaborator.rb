@@ -1,6 +1,7 @@
 class Collaborator < ActiveRecord::Base
   belongs_to :group
   has_many :moods
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   attr_accessible :email, :unique_token
   before_create :assign_unique_token
 

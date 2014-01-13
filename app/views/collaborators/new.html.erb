@@ -4,6 +4,18 @@
 
 <div class="container">
 <%= form_for :collaborator, url: collaborators_path do |f| %>
+  <% if @collaborator.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@collaborator.errors.count, "error") %> prohibited
+      this collaborator from being saved:</h2>
+    <ul>
+    <% @collaborator.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  
   <p>
     <%= f.label :email %><br>
     <%= f.text_field :email %>
