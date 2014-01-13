@@ -1,6 +1,8 @@
 Coolteam::Application.routes.draw do
   #get "pages/home"
-  resources :groups
+  resources :groups do
+      get 'notify', :on => :collection
+  end
 
   resources :collaborators do
     get :report, :on => :collection
