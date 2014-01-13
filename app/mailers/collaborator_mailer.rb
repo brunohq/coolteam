@@ -3,6 +3,6 @@ class CollaboratorMailer < ActionMailer::Base
 
   def daily_email(collaborator)
     @collaborator = collaborator
-    mail(:to => collaborator.email, :subject => "#{@user.name}, como estás hoje?")
+    mail(:to => collaborator.email, :subject => "Olá, como estás hoje?")
   end
 end
