@@ -1,8 +1,8 @@
 class CollaboratorsController < ApplicationController
 
   def index
-    if session[:admin].present?
-      @collaborators = Group.find(session[:admin]).collaborators
+    if cookies.signed[:admin].present?
+      @collaborators = Group.find(cookies.signed[:admin]).collaborators
     else
       redirect_to root_path
     end
@@ -10,7 +10,7 @@ class CollaboratorsController < ApplicationController
 
   def show
     @collaborator = Collaborator.find_by_unique_token(params[:unique_token])
-    session[:group] = @collaborator.group_id
+    cookies.signed[:group] = @collaborator.group_id
     @today = Date.today
     @welcome_msg = welcome(@today.wday)
   end
@@ -19,9 +19,9 @@ class CollaboratorsController < ApplicationController
 	end
 
 	def create
-    if session[:admin].present?
+    if cookies.signed[:admin].present?
   	  @collaborator = Collaborator.new(params[:collaborator])
-      @collaborator.group_id = session[:admin]
+      @collaborator.group_id = cookies.signed[:admin]
   	  @collaborator.save
   	  redirect_to action: "index"
     else
@@ -30,7 +30,7 @@ class CollaboratorsController < ApplicationController
 	end
 
   def edit
-    if session[:admin].present?
+    if cookies.signed[:admin].present?
       @collaborator = Collaborator.find(params[:id])
     else
       redirect_to root_path
@@ -38,7 +38,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def change_email
-    if session[:admin].present?
+    if cookies.signed[:admin].present?
       @collaborator = Collaborator.find(params[:id])
       @collaborator.email = params[:collaborator][:email]
 
@@ -60,13 +60,13 @@ class CollaboratorsController < ApplicationController
   end
 
   def report
-    if session[:group].present?
+    if cookies.signed[:group].present?
       d = Date.today
       @monday = d.at_beginning_of_week
       @friday = @monday + 4.days
       @moods = Hash.new
       (@monday..@friday).each do |date| 
-        @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => session[:group]).where(:date => date)
+        @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date)
       end
     else
       redirect_to root_path

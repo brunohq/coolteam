@@ -14,7 +14,7 @@ class MoodsController < ApplicationController
 	  @mood.save
 	end
 
-    redirect_to login_path(@collaborator.unique_token)
+    redirect_to report_collaborators_path
   end
 
 end
