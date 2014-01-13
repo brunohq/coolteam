@@ -25,6 +25,7 @@ class CollaboratorsController < ApplicationController
   	  if @collaborator.save
     	  redirect_to action: "index"
       else
+        flash[:danger] = 'O email introduzido nao e\' va\'lido'
         render 'new'
       end
     else
