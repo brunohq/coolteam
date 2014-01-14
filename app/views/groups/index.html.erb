@@ -1,13 +1,13 @@
 <div class="container">
-<h1>Listing groups</h1>
+<h1>Lista de equipas</h1>
 </div>
  
 <div class="container">
 <table>
   <tr>
     <th>ID</th>
-    <th>Title</th>
-    <th>People</th>
+    <th>Nome</th>
+    <th>Nº de Colaboradores</th>
   </tr>
  
   <% @groups.each do |g| %>
@@ -19,3 +19,16 @@
   <% end %>
 </table>
 </div>
+
+<div class="container" style="margin-top:30px;">
+  <%= link_to 'Adicionar nova', new_group_path %>
+</div>
+
+<style type="text/css">
+
+tr > td {
+  padding-top: 5px;
+  padding-right: 10px;
+}
+
+</style>

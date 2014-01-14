@@ -69,8 +69,8 @@ class CollaboratorsController < ApplicationController
       @monday = d.at_beginning_of_week
       @friday = @monday + 4.days
       @moods = Hash.new
-      (@monday..@friday).each do |date| 
-        @moods[date.strftime('%A') ] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date)
+      (@monday..@friday).each_with_index do |date, index| 
+        @moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date)
       end
     else
       redirect_to root_path
@@ -81,17 +81,34 @@ class CollaboratorsController < ApplicationController
   def welcome(weekday)
     case weekday
     when 1
-      "Segunda-feira, Como te sentes hoje?"
+      "Segunda-feira, como te sentes hoje?"
     when 2
-      "Terca-feira, Como te sentes hoje?"
+      "Terca-feira, como te sentes hoje?"
     when 3
-      "Quarta-feira, Como te sentes hoje?"
+      "Quarta-feira, como te sentes hoje?"
     when 4
-      "Quinta-feira, Como te sentes hoje?"
+      "Quinta-feira, como te sentes hoje?"
     when 5
-      "Sexta-feira, Como te sentes hoje?"
+      "Sexta-feira, como te sentes hoje?"
     else
       "Como te sentes hoje?"
+    end
+  end
+
+  def day_of_the_week(index)
+    case index
+    when 0
+      "Segunda-feira"
+    when 1
+      "Terca-feira"
+    when 2
+      "Quarta-feira"
+    when 3
+      "Quinta-feira"
+    when 4
+      "Sexta-feira"
+    else
+      "Ishh-feira"
     end
   end
 

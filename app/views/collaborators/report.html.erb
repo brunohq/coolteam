@@ -1,5 +1,5 @@
 <div class="container">
-<h1>Weekly report from <%= @monday.strftime('%d %b') %> to <%= @friday.strftime('%d %b') %></h1>
+<h1>Semana de <%= @monday.strftime('%d %b') %> a <%= @friday.strftime('%d %b') %></h1>
 </div>
 
 <div class="container">
@@ -14,3 +14,12 @@
   <% end %>
 </table>
 </div>
+
+
+<style type="text/css">
+
+tr > td {
+ padding-top: 10px;
+}
+
+</style>
