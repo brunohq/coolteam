@@ -15,6 +15,8 @@
       <td><%= g.id %></td>
       <td><%= g.title %></td>
       <td><%= g.collaborators.count %></td>
+      <td><%= link_to 'Eliminar', group_path(g),
+                    method: :delete, data: { confirm: 'Tem a certeza?' } %></td>
     </tr>
   <% end %>
 </table>
