@@ -1,29 +1,51 @@
 <div class="container">
-<h1>Como te sentes hoje?</h1>
+
+<div class="row margin50">
+  <div class="col-md-6 col-md-offset-3">
+	<h1>Como te sentes hoje?</h1>
+  </div>
 </div>
 
-<div class="container" id="heads">
 
-  <p>
+<div class="row margin30">
+  <div class="col-md-6 col-md-offset-3">
+  <p class="text-center">
     <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => "change_mood") %>
     <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => "change_mood")  %>
     <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => "change_mood")   %>
     <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => "change_mood")   %>
   </p>
-
+  </div>
 </div>
 
-<div class="container">
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
 
-  <p>
-    <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => "change_mood") %>
-    <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => "change_mood")  %>
-    <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => "change_mood")   %>
-    <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => "change_mood")   %>
-  </p>
+  <%= form_tag('/pages/register') do |f|%>
+  	<div class="input-group">
+	  <span class="input-group-addon"><%= image_tag("envelope.png", alt: "mail") %></span>
+</span>
+	  <input type="email" class="form-control" name="email" placeholder="Email" required="required" style="height: 38px;">
+	  <span class="input-group-btn">
+	    <%= submit_tag 'REGISTAR', class: 'btn btn-default', style: 'height: 38px;' %>
+      </span>
+	</div>
 
+	<% end -%>
+
+  </div>
 </div>
 
+<div class="row margin30" >
+  <div class="col-md-6 col-md-offset-3">
+	<% flash.each do |name, msg| %>
+	  <div class="alert alert-<%= name %>">
+	    <a class="close" data-dismiss="alert">&#215;</a>
+	    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+	  </div>
+	<% end %>
+  </div>
+</div>
 
 <script type="text/javascript">
   $(function() {
@@ -37,8 +59,18 @@
 </script>
 
 <style type="text/css">
-#heads {
-  margin: 30px 0;
+h1 {
+	text-align: center;
+}
+
+.margin30 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.margin50 {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 a.change_mood {
