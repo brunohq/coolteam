@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
     @group = Group.find_by_title(params[:title])
     cookies.signed[:admin] = @group.id
 
-    redirect_to collaborators_path
+    redirect_to :controller => 'pages', :action => 'about'
   end
 
   def new
