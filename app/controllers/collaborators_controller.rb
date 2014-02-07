@@ -12,10 +12,11 @@ class CollaboratorsController < ApplicationController
     @collaborator = Collaborator.find_by_unique_token(params[:unique_token])
     cookies.signed[:group] = @collaborator.group_id
     today = Date.today
+    yesterday = today.wday == 1 ? today - 3 : today - 1
     if params[:date].present? && params[:date] == 'y'
-      @date = today - 1
+      @date = yesterday
     else
-      yesterdays_mood = Mood.where(:date => (today - 1)).where(:collaborator_id=>@collaborator.id).first
+      yesterdays_mood = Mood.where(:date => (yesterday)).where(:collaborator_id=>@collaborator.id).first
       if yesterdays_mood.nil?
         @missed_yesterday = true
       end      
