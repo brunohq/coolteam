@@ -23,15 +23,30 @@
 
   <p>
     <%= f.hidden_field :rating, :value => @current_mood_rating %>
-    <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => @current_mood_rating == "contente" ? 'change_mood selected_mood' : 'change_mood') %>
-    <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => @current_mood_rating == "okay" ? 'change_mood selected_mood' : 'change_mood') %>
-    <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => @current_mood_rating == "preocupado" ? 'change_mood selected_mood' : 'change_mood') %>
-    <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => @current_mood_rating == "triste" ? 'change_mood selected_mood' : 'change_mood') %>
-
+    <%= link_to(
+          "#{image_tag("legocons/contente.png")} contente".html_safe, 
+          "contente", :title => "contente", 
+          :class => @current_mood_rating == "contente" ? 'change_mood selected_mood' : 'change_mood') 
+        %>
+    <%= link_to(
+          "#{image_tag("legocons/okay.png")} okay".html_safe,  
+          "okay", :title => "okay" , 
+          :class => @current_mood_rating == "okay" ? 'change_mood selected_mood' : 'change_mood') 
+        %>
+    <%= link_to(
+          "#{image_tag("legocons/preocupado.png")} preocupado".html_safe, 
+          "preocupado", :title => "preocupado" , 
+          :class => @current_mood_rating == "preocupado" ? 'change_mood selected_mood' : 'change_mood') 
+        %>
+    <%= link_to(
+          "#{image_tag("legocons/triste.png")} triste".html_safe, 
+          "triste", :title => "triste" , 
+          :class => @current_mood_rating == "triste" ? 'change_mood selected_mood' : 'change_mood') 
+        %>
 
   </p>
 
-  <p>
+  <p style="margin-top: 10px;">
     <%= f.submit "Actualizar!", class: "btn btn-lg btn-default "  %>
   </p>
 <% end %>
@@ -56,10 +71,20 @@ a.change_mood {
   height: 120px;
   border-radius: 8px;
   text-align: center;
-  line-height: 8.5em;
+  line-height: 1em;
+  padding: 10px;
+  color: #333333;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 a.change_mood.selected_mood {
   background-color: #446CA9;
+  color: #FFF;
+}
+
+a.change_mood img {
+  margin-bottom: 5px;
 }
   
 </style>
