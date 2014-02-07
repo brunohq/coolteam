@@ -11,8 +11,18 @@ class CollaboratorsController < ApplicationController
   def show
     @collaborator = Collaborator.find_by_unique_token(params[:unique_token])
     cookies.signed[:group] = @collaborator.group_id
-    @today = Date.today
-    @welcome_msg = welcome(@today.wday)
+    today = Date.today
+    if params[:date].present? && params[:date] == 'y'
+      @date = today - 1
+    else
+      yesterdays_mood = Mood.where(:date => (today - 1)).where(:collaborator_id=>@collaborator.id).first
+      if yesterdays_mood.nil?
+        @missed_yesterday = true
+      end      
+      @date = today
+    end
+    #raise yesterdays_mood.inspect
+    @welcome_msg = welcome(@date.wday)
   end
 
 	def new

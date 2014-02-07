@@ -2,7 +2,7 @@ class MoodsController < ApplicationController
 
   def create
     @collaborator = Collaborator.find(params[:collaborator_id])
-    @mood = Mood.where(:date=>Date.today).where(:collaborator_id=>params[:collaborator_id]).first
+    @mood = Mood.where(:date => params[:mood][:date]).where(:collaborator_id=>params[:collaborator_id]).first
 
     unless params[:mood][:rating].blank?
 		if @mood
@@ -11,7 +11,7 @@ class MoodsController < ApplicationController
 		  @mood.save
 		else
 	      @mood = @collaborator.moods.new(params[:mood])
-	      @mood.date = Date.today
+	      @mood.date = params[:mood][:date]
 		  @mood.save
 		end
 

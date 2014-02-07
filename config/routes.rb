@@ -9,7 +9,7 @@ Coolteam::Application.routes.draw do
     resources :moods
   end
 
-  get '/c/:unique_token', to: 'collaborators#show', as: :login
+  get '/c/:unique_token(/:date)', to: 'collaborators#show', as: :login
   get '/g/:title', to: 'groups#show', as: :admin_login
 
   # The priority is based upon order of creation:

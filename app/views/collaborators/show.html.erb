@@ -1,5 +1,10 @@
 <div class="container">
-<h1><%= @welcome_msg %></h1>
+<h1 style="display:inline-block"><%= @welcome_msg %><%= @yesterday %></h1>
+<%= 
+  if @missed_yesterday
+    link_to "ps: esqueceste-te de votar ontem... clica aqui", login_path(@collaborator.unique_token, "y")
+  end 
+%>
 </div>
 
 <div class="container">
@@ -14,6 +19,8 @@
 <div class="container">
 
 <%= form_for([@collaborator, @collaborator.moods.build]) do |f| %>
+    <%= f.hidden_field :date, :value => @date %>
+
   <p>
     <%= f.hidden_field :rating %>
     <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => "change_mood") %>
