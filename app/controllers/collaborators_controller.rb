@@ -21,7 +21,11 @@ class CollaboratorsController < ApplicationController
       end      
       @date = today
     end
-    #raise yesterdays_mood.inspect
+
+    current_mood = Mood.where(:date => @date).where(:collaborator_id=>@collaborator.id).first
+    if current_mood
+      @current_mood_rating = current_mood.rating
+    end
     @welcome_msg = welcome(@date.wday)
   end
 

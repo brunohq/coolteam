@@ -22,11 +22,11 @@
     <%= f.hidden_field :date, :value => @date %>
 
   <p>
-    <%= f.hidden_field :rating %>
-    <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => "change_mood") %>
-    <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => "change_mood")  %>
-    <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => "change_mood")   %>
-    <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => "change_mood")   %>
+    <%= f.hidden_field :rating, :value => @current_mood_rating %>
+    <%= link_to(image_tag("legocons/contente.png", alt: "contente"), "contente", :title => "contente", :class => @current_mood_rating == "contente" ? 'change_mood selected_mood' : 'change_mood') %>
+    <%= link_to(image_tag("legocons/okay.png", alt: "okay"), "okay", :title => "okay" , :class => @current_mood_rating == "okay" ? 'change_mood selected_mood' : 'change_mood') %>
+    <%= link_to(image_tag("legocons/preocupado.png", alt: "preocupado"), "preocupado", :title => "preocupado" , :class => @current_mood_rating == "preocupado" ? 'change_mood selected_mood' : 'change_mood') %>
+    <%= link_to(image_tag("legocons/triste.png", alt: "triste"), "triste", :title => "triste" , :class => @current_mood_rating == "triste" ? 'change_mood selected_mood' : 'change_mood') %>
 
 
   </p>
@@ -41,8 +41,8 @@
   $(function() {
     $("a.change_mood").click(function(e) {
       e.preventDefault();
-      $('a.change_mood').css('background', 'transparent');
-      $(this).css("background-color", "#446CA9");
+      $('a.change_mood').removeClass("selected_mood");
+      $(this).addClass("selected_mood");
       $("#mood_rating").val($(this).attr("href"))
     });
   });
@@ -57,6 +57,9 @@ a.change_mood {
   border-radius: 8px;
   text-align: center;
   line-height: 8.5em;
+}
+a.change_mood.selected_mood {
+  background-color: #446CA9;
 }
   
 </style>
