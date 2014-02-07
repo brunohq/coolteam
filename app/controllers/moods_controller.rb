@@ -15,9 +15,9 @@ class MoodsController < ApplicationController
 		  @mood.save
 		end
 
-	    redirect_to report_collaborators_path
-	else		
-		redirect_to login_path(@collaborator.unique_token), :flash => { :danger => "Tem de selecionar um estado antes de clicar no botao actualizar." }
+	    redirect_to report_collaborators_path, :flash => { :success => "Obrigado pela tua resposta!" }
+	else
+		redirect_to login_path(@collaborator.unique_token), :flash => { :danger => "Tens de selecionar um estado antes de clicar no botao actualizar." }
 	end
   end
 
