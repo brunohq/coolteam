@@ -16,8 +16,11 @@
 	<% @moods.each do |day| %>
     <tr>
       <td><%= day[0] %></td>
-	  <% day[1].each do |m| %>
-      	<td>| <%= image_tag("legocons/" + m.rating + ".png", alt: m.rating)  %> </td>
+	  <% day[1].each do |m| 
+        m[1].times do
+      %>
+      	<td>| <%= image_tag("legocons/" + m[0] + ".png", alt: m[0])  %> </td>
+      <% end %>
 	  <% end %>
     </tr>
   <% end %>

@@ -85,11 +85,13 @@ class CollaboratorsController < ApplicationController
       @friday = @monday + 4.days
       @moods = Hash.new
       (@monday..@friday).each_with_index do |date, index| 
-        @moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date)
+        @moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
       end
     else
       redirect_to root_path
     end
+
+    puts @moods
   end
 
 
