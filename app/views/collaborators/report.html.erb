@@ -27,6 +27,18 @@
 </table>
 </div>
 
+<div id="week_navigation" class="container">
+<%=  
+  link_to "< Semana Anterior", report_collaborators_path(@previous_week.strftime("%Y-%m-%d"))
+%>
+<%=  
+  if @next_week 
+    link_to "| Semana Seguinte >", report_collaborators_path(@next_week.strftime("%Y-%m-%d"))
+  end
+%>
+</div>
+
+
 
 <style type="text/css">
 
@@ -34,4 +46,7 @@ tr > td {
  padding-top: 10px;
 }
 
+#week_navigation {
+  margin-top: 30px;
+}
 </style>

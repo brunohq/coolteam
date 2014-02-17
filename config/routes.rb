@@ -5,7 +5,7 @@ Coolteam::Application.routes.draw do
   end
 
   resources :collaborators do
-    get :report, :on => :collection
+    get 'report(/:date)', to: 'collaborators#report', :on => :collection, as: :report
     resources :moods
   end
 

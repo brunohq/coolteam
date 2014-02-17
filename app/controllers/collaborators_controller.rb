@@ -80,12 +80,23 @@ class CollaboratorsController < ApplicationController
 
   def report
     if cookies.signed[:group].present?
-      d = Date.today
+      if params[:date].present?
+        d = DateTime.parse(params[:date])
+      else
+        d = Date.today
+      end
       @monday = d.at_beginning_of_week
       @friday = @monday + 4.days
       @moods = Hash.new
       (@monday..@friday).each_with_index do |date, index| 
         @moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
+      end
+
+      if (@monday..@friday).cover?(Date.today)
+        @previous_week = (Date.today - 7.days).at_beginning_of_week
+      else
+        @previous_week = (d - 7.days).at_beginning_of_week
+        @next_week = (d + 7.days).at_beginning_of_week
       end
     else
       redirect_to root_path
