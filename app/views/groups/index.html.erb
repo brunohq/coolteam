@@ -7,14 +7,16 @@
   <tr>
     <th>ID</th>
     <th>Nome</th>
-    <th>Nº de Colaboradores</th>
+    <th>Colaboradores <br> Inactivos / Total</th>
+    <th>Moods<br> Falhados / Total</th>
   </tr>
  
   <% @groups.each do |g| %>
     <tr>
       <td><%= g.id %></td>
       <td><%= g.title %></td>
-      <td><%= g.collaborators.count %></td>
+      <td><%= g.inactive_collaborators_count %> / <%= g.total_collaborators_count %></td>
+      <td><%= g.missed_moods_count %> / <%= g.total_moods_count %></td>
       <td><%= link_to 'Eliminar', group_path(g),
                     method: :delete, data: { confirm: 'Tem a certeza?' } %></td>
     </tr>
@@ -27,10 +29,18 @@
 </div>
 
 <style type="text/css">
+table, th, td {
+  text-align: center;
+}
+
+tr > th {
+  vertical-align: bottom;
+  padding-right: 30px;
+}
 
 tr > td {
-  padding-top: 5px;
-  padding-right: 10px;
+  padding-top: 10px;
+  padding-right: 30px;
 }
 
 </style>
