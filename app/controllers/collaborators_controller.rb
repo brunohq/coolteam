@@ -85,6 +85,7 @@ class CollaboratorsController < ApplicationController
       else
         d = Date.today
       end
+      @n_collaborators = Group.find(cookies.signed[:group]).collaborators.count
       @monday = d.at_beginning_of_week
       @friday = @monday + 4.days
       @moods = Hash.new

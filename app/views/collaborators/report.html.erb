@@ -13,17 +13,25 @@
 
 <div class="container">
 <table>
-	<% @moods.each do |day| %>
+	<% @moods.each do |day|
+      n_moods = 0
+   %>
     <tr>
       <td><%= day[0] %></td>
 	  <% day[1].each do |m| 
+        n_moods += m[1]
         m[1].times do
       %>
       	<td>| <%= image_tag("legocons/" + m[0] + ".png", alt: m[0])  %> </td>
       <% end %>
 	  <% end %>
+
+    <% (@n_collaborators - n_moods).times do %>
+      <td>| <%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
+    <% end %>
     </tr>
   <% end %>
+
 </table>
 </div>
 
