@@ -105,8 +105,6 @@ class CollaboratorsController < ApplicationController
     else
       redirect_to root_path
     end
-
-    puts @my_moods
   end
 
 
