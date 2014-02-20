@@ -15,12 +15,7 @@
 <table>
     <tr>
       <th></th>
-     <% if cookies.signed[:token].present? %>
       <th class="me">Eu</th>
-      <th style="display:none"><%= @my_moods %></th>
-      <% else %>
-      <th class="me">Me</th>
-      <% end %>
       <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
     </tr>
 

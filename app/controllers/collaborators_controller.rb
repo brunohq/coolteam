@@ -10,7 +10,7 @@ class CollaboratorsController < ApplicationController
 
   def show
     @collaborator = Collaborator.find_by_unique_token(params[:unique_token])
-    cookies.signed[:token] = @collaborator.unique_token
+    cookies.signed[:collaborator] = @collaborator.id
     cookies.signed[:group] = @collaborator.group_id
     today = Date.today
     yesterday = today.wday == 1 ? today - 3 : today - 1
@@ -92,7 +92,7 @@ class CollaboratorsController < ApplicationController
       @my_moods = Hash.new
       @team_moods = Hash.new
       (@monday..@friday).each_with_index do |date, index| 
-        @my_moods[day_of_the_week(index)] = Mood.where("collaborator_id" => cookies.signed[:token]).where(:date => date)
+        @my_moods[day_of_the_week(index)] = Mood.where("collaborator_id" => cookies.signed[:collaborator]).where(:date => date)
         @team_moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
       end
 
