@@ -13,22 +13,40 @@
 
 <div class="container">
 <table>
-	<% @moods.each do |day|
+    <tr>
+      <th></th>
+      <th class="me">Me</th>
+      <th colspan="<%= @n_collaborators - 1 %>">Team</th>
+    </tr>
+
+	<% @team_moods.each do |day, day_moods|
       n_moods = 0
    %>
     <tr>
-      <td><%= day[0] %></td>
-	  <% day[1].each do |m| 
+      <td><%= day %></td>
+
+      <% 
+        if @my_moods[day].empty?
+          my_mood = 'desconhecido'
+        else 
+          my_mood = @my_moods[day][0].rating
+        end %>
+      <td class="me"><%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> </td>
+
+	  <% day_moods.each do |m| 
         n_moods += m[1]
-        m[1].times do
+        n_legos = m[0] == my_mood ? m[1] - 1 : m[1];
+        n_legos.times do
       %>
-      	<td>| <%= image_tag("legocons/" + m[0] + ".png", alt: m[0])  %> </td>
+      	<td><%= image_tag("legocons/" + m[0] + ".png", alt: m[0])  %> </td>
       <% end %>
 	  <% end %>
 
-    <% (@n_collaborators - n_moods).times do %>
-      <td>| <%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
+    <% n_legos = my_mood == 'desconhecido' ? (@n_collaborators - n_moods) - 1 : (@n_collaborators - n_moods);
+       n_legos.times do %>
+      <td><%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
     <% end %>
+
     </tr>
   <% end %>
 
@@ -50,8 +68,18 @@
 
 <style type="text/css">
 
+tr > th {
+  text-align: center;
+  padding: 10px 0 0 10px;
+}
+
 tr > td {
- padding-top: 10px;
+ padding: 10px 0 0 10px;
+}
+
+.me{
+  padding-right: 10px;
+  border-right: 2px dashed;
 }
 
 #week_navigation {
