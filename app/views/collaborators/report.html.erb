@@ -15,8 +15,13 @@
 <table>
     <tr>
       <th></th>
+     <% if cookies.signed[:token].present? %>
+      <th class="me">Eu</th>
+      <th style="display:none"><%= cookies.signed[:token] %></th>
+      <% else %>
       <th class="me">Me</th>
-      <th colspan="<%= @n_collaborators - 1 %>">Team</th>
+      <% end %>
+      <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
     </tr>
 
 	<% @team_moods.each do |day, day_moods|
