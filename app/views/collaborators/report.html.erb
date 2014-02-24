@@ -1,3 +1,4 @@
+
 <div class="container">
 <h1>Semana de <%= @monday.strftime('%d %b') %> a <%= @friday.strftime('%d %b') %></h1>
 </div>
@@ -17,9 +18,11 @@
       <th></th>
       <th class="me">Eu</th>
       <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
+      <th>Total</th>
     </tr>
 
 	<% @team_moods.each do |day, day_moods|
+      daily_counter = Hash.new
       n_moods = 0
    %>
     <tr>
@@ -34,6 +37,7 @@
       <td class="me"><%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> </td>
 
 	  <% day_moods.each do |m| 
+        daily_counter[m[0]] = m[1]
         n_moods += m[1]
         n_legos = m[0] == my_mood ? m[1] - 1 : m[1];
         n_legos.times do
@@ -42,10 +46,14 @@
       <% end %>
 	  <% end %>
 
-    <% n_legos = my_mood == 'desconhecido' ? (@n_collaborators - n_moods) - 1 : (@n_collaborators - n_moods);
+    <% 
+       n_legos = my_mood == 'desconhecido' ? (@n_collaborators - n_moods) - 1 : (@n_collaborators - n_moods);
        n_legos.times do %>
       <td><%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
     <% end %>
+
+      <td>c:<%= daily_counter['contente'] || 0 %> o:<%= daily_counter['contente'] || 0 %>  <br />
+      p:<%= daily_counter['preocupado'] || 0 %> t:<%= daily_counter['triste'] || 0 %></td>
 
     </tr>
   <% end %>
