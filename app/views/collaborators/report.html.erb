@@ -18,7 +18,7 @@
       <th></th>
       <th class="me">Eu</th>
       <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
-      <th>Total</th>
+      <th class="total">Total</th>
     </tr>
 
 	<% @team_moods.each do |day, day_moods|
@@ -52,7 +52,7 @@
       <td><%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
     <% end %>
 
-      <td>c:<%= daily_counter['contente'] || 0 %> o:<%= daily_counter['contente'] || 0 %>  <br />
+      <td>c:<%= daily_counter['contente'] || 0 %> o:<%= daily_counter['okay'] || 0 %>  <br />
       p:<%= daily_counter['preocupado'] || 0 %> t:<%= daily_counter['triste'] || 0 %></td>
 
     </tr>
@@ -89,7 +89,9 @@ tr > td {
   padding-right: 10px;
   border-right: 2px dashed;
 }
-
+.total{
+  padding-right: 10px;
+}
 #week_navigation {
   margin-top: 30px;
 }
