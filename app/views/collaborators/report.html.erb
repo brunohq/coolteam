@@ -20,8 +20,9 @@
       <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
     </tr>
 
-	<% @team_moods.each do |day, day_moods|
-      daily_counter = Hash.new
+	<% 
+    weekly_counter = Hash.new 0
+    @team_moods.each do |day, day_moods|
       n_moods = 0
    %>
     <tr>
@@ -36,7 +37,7 @@
       <td class="me"><%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> </td>
 
 	  <% day_moods.each do |m| 
-        daily_counter[m[0]] = m[1]
+        weekly_counter[m[0]] += m[1]
         n_moods += m[1]
         n_legos = m[0] == my_mood ? m[1] - 1 : m[1];
         n_legos.times do
@@ -68,7 +69,24 @@
 %>
 </div>
 
+<div class="container">
 
+<div class="progress" style="width:460px;margin: 0 auto;">
+  <div class="progress-bar progress-bar-1" style="width: <%= (weekly_counter['contente'].to_f  / (@n_collaborators * 5) ) * 100 %>%">
+    <span class="">Contente</span>
+  </div>
+  <div class="progress-bar progress-bar-2" style="width: <%= (weekly_counter['okay'].to_f  / (@n_collaborators * 5) ) * 100 %>%">
+    <span class="">Okay</span>
+  </div>
+  <div class="progress-bar progress-bar-3" style="width: <%= (weekly_counter['preocupado'].to_f  / (@n_collaborators * 5) ) * 100 %>%">
+    <span class="">Preocupado</span>
+  </div>
+  <div class="progress-bar progress-bar-4" style="width: <%= (weekly_counter['triste'].to_f  / (@n_collaborators * 5) ) * 100 %>%">
+    <span class="">Triste</span>
+  </div>
+</div>
+
+</div>
 
 <style type="text/css">
 
@@ -88,5 +106,18 @@ td.me{
 
 #week_navigation {
   margin-top: 30px;
+}
+
+.progress-bar-1 {
+  background-color: green;
+}
+.progress-bar-2 {
+  background-color: blue;
+}
+.progress-bar-3 {
+  background-color: orange;
+}
+.progress-bar-4 {
+  background-color: yellow;
 }
 </style>
