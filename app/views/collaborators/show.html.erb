@@ -1,4 +1,4 @@
-<div class="container">
+<div id ="welcome_msg" class="container">
 <h1 style="display:inline-block"><%= @welcome_msg %><%= @yesterday %></h1>
 <%= 
   if @missed_yesterday
@@ -16,7 +16,7 @@
 <% end %>
 </div>
 
-<div class="container">
+<div id="mood_selection" class="container">
 
 <%= form_for([@collaborator, @collaborator.moods.build]) do |f| %>
     <%= f.hidden_field :date, :value => @date %>
@@ -46,7 +46,7 @@
 
   </p>
 
-  <p style="margin-top: 10px;">
+  <p id="mood_action">
     <%= f.submit "Actualizar!", class: "btn btn-lg btn-default "  %>
   </p>
 <% end %>
@@ -64,6 +64,19 @@
 </script>
 
 <style type="text/css">
+#welcome_msg {
+  margin: 20px auto;
+  text-align: center;
+}
+
+#mood_selection {
+  text-align: center;
+}
+
+#mood_action {
+  margin: 40px auto 40px;
+  text-align: center;
+}
 
 a.change_mood {
   display: inline-block;
