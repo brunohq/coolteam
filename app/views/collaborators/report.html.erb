@@ -1,6 +1,16 @@
 
-<div class="container">
-<h1>Semana de <%= @monday.strftime('%d %b') %> a <%= @friday.strftime('%d %b') %></h1>
+<div id="week_navigation" class="container">
+<%=  
+  link_to "#{image_tag("seta-back.png")}".html_safe, report_collaborators_path(@previous_week.strftime("%Y-%m-%d")), :title => "Semana Anterior"
+%>
+
+<h1>Semana <%= @monday.strftime('%d %b') %> - <%= @friday.strftime('%d %b') %></h1>
+
+<%=  
+  if @next_week 
+    link_to "#{image_tag("seta-next.png")}".html_safe, report_collaborators_path(@next_week.strftime("%Y-%m-%d")), :title => "Semana Seguinte"
+  end
+%>
 </div>
 
 <div class="container">
@@ -12,8 +22,9 @@
 <% end %>
 </div>
 
-<div class="container">
+<div id="week_moods" >
 <table>
+
     <tr>
       <th></th>
       <th class="me">Eu</th>
@@ -58,18 +69,7 @@
 </table>
 </div>
 
-<div id="week_navigation" class="container">
-<%=  
-  link_to "< Semana Anterior", report_collaborators_path(@previous_week.strftime("%Y-%m-%d"))
-%>
-<%=  
-  if @next_week 
-    link_to "| Semana Seguinte >", report_collaborators_path(@next_week.strftime("%Y-%m-%d"))
-  end
-%>
-</div>
-
-<div class="container">
+<div id="week_stats" class="container">
 
 <div class="progress" style="width:460px;margin: 0 auto;">
   <div class="progress-bar progress-bar-1" style="width: <%= (weekly_counter['contente'].to_f  / (@n_collaborators * 5) ) * 100 %>%">
@@ -89,6 +89,21 @@
 </div>
 
 <style type="text/css">
+#week_navigation {
+  text-align: center;
+}
+#week_navigation h1 {
+  display: inline-block;
+}
+
+#week_moods {
+  display: table;
+  margin: 0 auto;
+}
+
+#week_moods table{
+  margin-left: -60px;
+}
 
 tr > th {
   text-align: center;
@@ -104,8 +119,8 @@ td.me{
   border-right: 2px dashed #ccc;
 }
 
-#week_navigation {
-  margin-top: 30px;
+#week_stats {
+  margin-top: 60px;
 }
 
 .progress-bar-1 {
