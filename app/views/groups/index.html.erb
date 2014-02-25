@@ -8,7 +8,7 @@
     <th>ID</th>
     <th>Nome</th>
     <th>Colaboradores <br> Inactivos / Total</th>
-    <th>Moods<br> Falhados / Total</th>
+    <th>Moods<br> Falhados </th>
   </tr>
  
   <% @groups.each do |g| %>
@@ -16,7 +16,8 @@
       <td><%= g.id %></td>
       <td><%= g.title %></td>
       <td><%= g.inactive_collaborators_count %> / <%= g.total_collaborators_count %></td>
-      <td><%= g.missed_moods_count %> / <%= g.total_moods_count %></td>
+      <td><% missed_moods_perc = (g.missed_moods_count * 100.0 / g.total_moods_count) %>
+        <%= missed_moods_perc.nan? ? 0 : missed_moods_perc.to_i %>%</td>
       <td><%= link_to 'Eliminar', group_path(g),
                     method: :delete, data: { confirm: 'Tem a certeza?' } %></td>
     </tr>
