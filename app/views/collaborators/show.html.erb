@@ -1,10 +1,5 @@
 <div id ="welcome_msg" class="container">
 <h1 style="display:inline-block"><%= @welcome_msg %><%= @yesterday %></h1>
-<%= 
-  if @missed_yesterday
-    link_to "ps: esqueceste-te de votar ontem... clica aqui", login_path(@collaborator.unique_token, "y")
-  end 
-%>
 </div>
 
 <div class="container">

@@ -12,17 +12,15 @@ class CollaboratorsController < ApplicationController
     @collaborator = Collaborator.find_by_unique_token(params[:unique_token])
     cookies.signed[:collaborator] = @collaborator.id
     cookies.signed[:group] = @collaborator.group_id
-    today = Date.today
-    yesterday = today.wday == 1 ? today - 3 : today - 1
-    if params[:date].present? && params[:date] == 'y'
-      @date = yesterday
-    else
-      yesterdays_mood = Mood.where(:date => (yesterday)).where(:collaborator_id=>@collaborator.id).first
-      if yesterdays_mood.nil?
-        @missed_yesterday = true
-      end      
-      @date = today
+    if params[:date].present?
+      @date = Date.parse params[:date]
+    else     
+      @date = Date.today
     end
+
+    if @date > Date.today 
+      redirect_to report_collaborators_path, :flash => { :danger => "Ainda nao chegamos la\'..." }
+    end 
 
     current_mood = Mood.where(:date => @date).where(:collaborator_id=>@collaborator.id).first
     if current_mood
@@ -82,13 +80,15 @@ class CollaboratorsController < ApplicationController
   def report
     if cookies.signed[:group].present?
       if params[:date].present?
-        d = DateTime.parse(params[:date])
+        d = Date.parse(params[:date])
       else
         d = Date.today
       end
+
       @n_collaborators = Group.find(cookies.signed[:group]).collaborators.count
       @monday = d.at_beginning_of_week
       @friday = @monday + 4.days
+      @me = Collaborator.find(cookies.signed[:collaborator])
       @my_moods = Hash.new
       @team_moods = Hash.new
       (@monday..@friday).each_with_index do |date, index| 

@@ -33,19 +33,23 @@
 
 	<% 
     weekly_counter = Hash.new 0
-    @team_moods.each do |day, day_moods|
+    @team_moods.each_with_index do |(day, day_moods),index|
       n_moods = 0
    %>
     <tr>
       <td><%= day %></td>
 
-      <% 
-        if @my_moods[day].empty?
-          my_mood = 'desconhecido'
-        else 
-          my_mood = @my_moods[day][0].rating
-        end %>
-      <td class="me"><%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> </td>
+      <td class="me">
+        <% if @my_moods[day].empty? 
+            my_mood = 'desconhecido'
+          %>
+            <%= link_to "#{image_tag("legocons/desconhecido.png")}".html_safe, login_path(@me.unique_token, (@monday+index).strftime("%Y-%m-%d")), :title => "Definir o meu mood" %>
+        <% else 
+            my_mood = @my_moods[day][0].rating
+          %>
+            <%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> 
+        <% end %>
+      </td>
 
 	  <% day_moods.each do |m| 
         weekly_counter[m[0]] += m[1]
