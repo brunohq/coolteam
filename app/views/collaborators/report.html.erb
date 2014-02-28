@@ -41,9 +41,14 @@
 
       <td class="me">
         <% if @my_moods[day].empty? 
-            my_mood = 'desconhecido'
+             my_mood = 'desconhecido'
+
+             if ((@monday+index) <= Date.today)
           %>
-            <%= link_to "#{image_tag("legocons/desconhecido.png")}".html_safe, login_path(@me.unique_token, (@monday+index).strftime("%Y-%m-%d")), :title => "Definir o meu mood" %>
+            <%= link_to "#{image_tag("legocons/desconhecido_novo.png")}".html_safe, login_path(@me.unique_token, (@monday+index).strftime("%Y-%m-%d")), :title => "Definir o meu mood" %>
+          <% else %>
+            <%= image_tag("legocons/" + my_mood + ".png", alt: my_mood)  %> 
+          <% end %>
         <% else 
             my_mood = @my_moods[day][0].rating
           %>
