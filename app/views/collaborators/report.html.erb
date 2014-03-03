@@ -22,7 +22,8 @@
 <% end %>
 </div>
 
-<div id="week_moods" >
+<% mclass = (@n_collaborators > 10 ) ? 'plus10' : '';  %>
+<div id="week_moods" class="<%= mclass %>">
 <table>
 
     <tr>
@@ -128,6 +129,10 @@
 
 #week_moods table{
   margin-left: -60px;
+}
+
+.plus10 img {
+  width: 52px;
 }
 
 tr > th {
