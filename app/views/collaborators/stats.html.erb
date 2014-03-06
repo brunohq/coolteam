@@ -1,0 +1,179 @@
+<div class="container">
+	<div id="chart" style="width: 880px; height: 300px"></div>
+</div>
+
+
+<script src="http://elycharts.com/sites/elycharts.com/repo/lib/raphael.js" type="text/javascript"></script>
+<script src="http://elycharts.com/sites/elycharts.com/repo/dist/elycharts.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+
+    function values() {
+	    var thevalues1 = new Array(28);
+	    var thevalues2 = new Array(28);
+	    var thevalues3 = new Array(28);
+	    var thevalues4 = new Array(28);
+	    
+	    <% 
+		    $i = 0
+			$num = 28
+			$string1 = '['
+			$string2 = '['
+			$string3 = '['
+			$string4 = '['
+
+		    until $i >= $num  do
+			   $string1 << @contente[$i].to_s
+			   $string1 << ','
+			   $string2 << @okay[$i].to_s
+			   $string2 << ','
+			   $string3 << @preocupado[$i].to_s
+			   $string3 << ','
+			   $string4 << @triste[$i].to_s
+			   $string4 << ','
+			   $i +=1;
+			end
+		    
+			$string1 << ']'
+			$string2 << ']'
+			$string3 << ']'
+			$string4 << ']'
+		%>
+
+	    thevalues1 = <%= $string1 %>
+	    thevalues2 = <%= $string2 %>
+	    thevalues3 = <%= $string3 %>
+	    thevalues4 = <%= $string4 %>
+
+	    return { serie1: thevalues1, serie2: thevalues2, serie3: thevalues3, serie4: thevalues4 };
+	}
+
+	function labels() {
+	    var thevalues1 = new Array(28);
+	    <% 
+		    $i = 0
+			$num = 28
+			$string1 = '['
+
+		    until $i >= $num  do
+			   $string1 << '"' << @days[$i] << '"'
+			   $string1 << ','
+			   $i +=1;
+			end
+		    
+			$string1 << ']'
+		%>
+
+	    thevalues1 = <%= raw $string1 %>
+
+	    return thevalues1 ;
+	}
+
+
+  $("#chart").chart({
+  template: "happyteam_lines",
+  values: values(),
+  defaultSeries: {
+    fill: false,
+    stacked: false
+  },
+  labels : labels(),
+  legend : {
+  serie1 : "Contente",
+  serie2 : "Okay",
+  serie3 : "Preocupado",
+  serie4 : "Triste"
+ }
+});
+
+});
+
+$.elycharts.templates['happyteam_lines'] = {
+  type: "line",
+  margins: [10, 10, 60, 30],
+  defaultSeries: {
+    plotProps: {
+      "stroke-width": 2,
+    },
+    dot: true,
+    dotProps: {
+      stroke: "white",
+      "stroke-width": 1
+    },
+    startAnimation: {
+      active: true,
+      type: "avg",
+      speed: 1000
+    },
+     tooltip: {
+            height: 85,
+            width: 100,
+            padding: [5, 5],
+            //offset: [-15, -10],
+            frameProps: {
+                opacity: 0.95,
+                /* fill: "white", */
+                stroke: "#000"
+
+            }
+        }
+  },
+  tooltips: function(env, serie, index, value, label) {
+        return "<div class='label'><p class='date'>September " + index + "</p><p><span class='contente'>Contente:</span> " + env.opt.values['serie1'][index] + "</p><p><span class='okay'>Okay:</span> " + env.opt.values['serie2'][index] + "</p><p><span class='preocupado'>Preocupado:</span> " + env.opt.values['serie2'][index] + "</p><p><span class='triste'>Triste:</span> " + env.opt.values['serie2'][index] + "</p></div>";
+    },
+  series: {
+    serie1: {
+      color: "#10A257"
+    },
+    serie2: {
+      color: "#0265B8"
+    },
+    serie3: {
+      color: "#FDC01E"
+    },
+    serie4: {
+      color: "#CB0015"
+    }
+  },
+  defaultAxis: {
+    labels: true
+  },
+  features: {
+    mousearea: {
+      type: "index"
+    },
+    highlight: {
+      indexHighlight: "auto",
+      indexHighlightProps: {
+        "stroke-dasharray": "-",
+        "stroke-width": 2,
+        opacity: 0.5
+      }
+    },
+    grid: {
+      draw: [true, false],
+      props: {
+        "stroke-dasharray": "-"
+      }
+    },
+   legend : {
+       horizontal : true,
+       //width : 300,
+       //height : 80,
+       x : 0,
+       y : 280,
+       dotType : "circle",
+       dotProps : {
+        stroke : "white",
+        "stroke-width" : 2
+       },
+       borderProps : {
+        opacity : 0.1,
+        fill : "#c0c0c0",
+        "stroke-width" : 0,
+        "stroke-opacity" : 0
+       }
+  },
+  }
+};
+</script>

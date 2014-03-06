@@ -107,6 +107,32 @@ class CollaboratorsController < ApplicationController
     end
   end
 
+  def stats
+    if cookies.signed[:group].present?
+      bdate = Date.parse('1-02-2014')
+      edate = Date.parse('28-02-2014')
+      moods = Array.new
+      @contente = Array.new
+      @okay = Array.new
+      @preocupado = Array.new
+      @triste = Array.new
+      @days = Array.new
+
+      (bdate..edate).each_with_index do |date, index| 
+        moods = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
+        @contente << (moods["contente"] ? moods["contente"] : 0)
+        @okay << (moods["okay"] ? moods["okay"] : 0)
+        @preocupado << (moods["preocupado"] ? moods["preocupado"] : 0)
+        @triste << (moods["triste"] ? moods["triste"] : 0)
+        @days << date.strftime("%m/%d/%Y")
+      end
+
+
+    else
+      redirect_to root_path
+    end
+  end
+
 
   def welcome(weekday)
     case weekday
