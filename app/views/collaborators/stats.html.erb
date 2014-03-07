@@ -1,5 +1,13 @@
-<div class="container">
-	<div id="chart" style="width: 880px; height: 300px"></div>
+<div class="container" style="margin-bottom:50px">
+	<div id="chart_moods" style="width: 880px; height: 300px"></div>
+</div>
+
+<div class="container" style="margin-bottom:50px">
+	<div id="chart_overall" style="width: 880px; height: 300px"></div>
+</div>
+
+<div class="container" style="margin-bottom:50px">
+	<div id="chart_average" style="width: 880px; height: 300px"></div>
 </div>
 
 
@@ -8,7 +16,7 @@
 <script type="text/javascript">
 $(function() {
 
-    function values() {
+    function values_moods() {
 	    var thevalues1 = new Array(<%= @days.length %>);
 	    var thevalues2 = new Array(<%= @days.length %>);
 	    var thevalues3 = new Array(<%= @days.length %>);
@@ -48,6 +56,61 @@ $(function() {
 	    return { serie1: thevalues1, serie2: thevalues2, serie3: thevalues3, serie4: thevalues4 };
 	}
 
+	function values_overall() {
+	    var thevalues1 = new Array(<%= @days.length %>);
+	    var thevalues2 = new Array(<%= @days.length %>);
+	    
+	    <% 
+		    $i = 0
+			$num = @days.length
+			$string1 = '['
+			$string2 = '['
+
+		    until $i >= $num  do
+			   $string1 << (@contente[$i] + @okay[$i]).to_s
+			   $string1 << ','
+			   $string2 << (@preocupado[$i] + @triste[$i]).to_s
+			   $string2 << ','
+			   $i +=1;
+			end
+		    
+			$string1 << ']'
+			$string2 << ']'
+		%>
+
+	    thevalues1 = <%= $string1 %>
+	    thevalues2 = <%= $string2 %>
+
+	    return { serie1: thevalues1, serie4: thevalues2 };
+	}
+
+	function values_average() {
+	    var thevalues1 = new Array(<%= @days.length %>);
+	    
+	    <% 
+		    $i = 0
+			$num = @days.length
+			$string1 = '['
+
+		    until $i >= $num  do
+		       if (@contente[$i] + @okay[$i] + @preocupado[$i] + @triste[$i]) == 0
+		       	 $avg = 0
+		       else
+		         $avg = (@contente[$i]*2.0 + @okay[$i]*1.0 + @preocupado[$i]*(-1.0) + @triste[$i]*(-2.0)) / (@contente[$i] + @okay[$i] + @preocupado[$i] + @triste[$i])
+			   end
+			   $string1 << $avg.to_s
+			   $string1 << ','
+			   $i +=1;
+			end
+		    
+			$string1 << ']'
+		%>
+
+	    thevalues1 = <%= $string1 %>
+
+	    return { serie2: thevalues1 };
+	}
+
 	function labels() {
 	    var thevalues1 = new Array(28);
 	    <% 
@@ -74,28 +137,45 @@ $(function() {
 	}
 
 
-  $("#chart").chart({
-  template: "happyteam_lines",
-  values: values(),
-  defaultSeries: {
-    fill: false,
-    stacked: false
-  },
-  labels : labels(),
-  legend : {
-  serie1 : "Contente",
-  serie2 : "Okay",
-  serie3 : "Preocupado",
-  serie4 : "Triste"
- }
-});
+	$("#chart_moods").chart({
+		template: "happyteam_graph",
+		values: values_moods(),
+		labels : labels(),
+		legend : {
+		  serie1 : "Contente",
+		  serie2 : "Okay",
+		  serie3 : "Preocupado",
+		  serie4 : "Triste"
+		}
+	});
+
+	$("#chart_overall").chart({
+		template: "happyteam_graph",
+		values: values_overall(),
+		labels : labels(),
+		legend : {
+		  serie1 : "Positivo",
+		  serie4 : "Negativo"
+		}
+	});
+
+	$("#chart_average").chart({
+		template: "happyteam_graph",
+		values: values_average(),
+		labels : labels(),
+		legend : {
+		  serie2 : "Media",
+		}
+	});
 
 });
 
-$.elycharts.templates['happyteam_lines'] = {
+$.elycharts.templates['happyteam_graph'] = {
   type: "line",
   margins: [10, 10, 60, 30],
   defaultSeries: {
+  	fill: false,
+    stacked: false,
     plotProps: {
       "stroke-width": 2,
     },
