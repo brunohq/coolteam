@@ -119,12 +119,15 @@ class CollaboratorsController < ApplicationController
       @days = Array.new
 
       (bdate..edate).each_with_index do |date, index| 
-        moods = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
-        @contente << (moods["contente"] ? moods["contente"] : 0)
-        @okay << (moods["okay"] ? moods["okay"] : 0)
-        @preocupado << (moods["preocupado"] ? moods["preocupado"] : 0)
-        @triste << (moods["triste"] ? moods["triste"] : 0)
-        @days << date.strftime("%m/%d/%Y")
+        if date.wday.between?(1,5) 
+          moods = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
+          @contente << (moods["contente"] ? moods["contente"] : 0)
+          @okay << (moods["okay"] ? moods["okay"] : 0)
+          @preocupado << (moods["preocupado"] ? moods["preocupado"] : 0)
+          @triste << (moods["triste"] ? moods["triste"] : 0)
+          # @days << date.strftime("%d")
+          @days << date.strftime("%d %b")
+        end
       end
 
 

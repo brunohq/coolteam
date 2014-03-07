@@ -9,14 +9,14 @@
 $(function() {
 
     function values() {
-	    var thevalues1 = new Array(28);
-	    var thevalues2 = new Array(28);
-	    var thevalues3 = new Array(28);
-	    var thevalues4 = new Array(28);
+	    var thevalues1 = new Array(<%= @days.length %>);
+	    var thevalues2 = new Array(<%= @days.length %>);
+	    var thevalues3 = new Array(<%= @days.length %>);
+	    var thevalues4 = new Array(<%= @days.length %>);
 	    
 	    <% 
 		    $i = 0
-			$num = 28
+			$num = @days.length
 			$string1 = '['
 			$string2 = '['
 			$string3 = '['
@@ -52,13 +52,17 @@ $(function() {
 	    var thevalues1 = new Array(28);
 	    <% 
 		    $i = 0
-			$num = 28
+			$num = @days.length
 			$string1 = '['
 
 		    until $i >= $num  do
-			   $string1 << '"' << @days[$i] << '"'
-			   $string1 << ','
-			   $i +=1;
+				# if $i % 4 == 0
+				   $string1 << '"' << @days[$i] << '"'
+				# else 
+				#  $string1 << '""'
+				# end
+				$string1 << ','
+				$i +=1;
 			end
 		    
 			$string1 << ']'
@@ -119,7 +123,9 @@ $.elycharts.templates['happyteam_lines'] = {
         }
   },
   tooltips: function(env, serie, index, value, label) {
-        return "<div class='label'><p class='date'>September " + index + "</p><p><span class='contente'>Contente:</span> " + env.opt.values['serie1'][index] + "</p><p><span class='okay'>Okay:</span> " + env.opt.values['serie2'][index] + "</p><p><span class='preocupado'>Preocupado:</span> " + env.opt.values['serie2'][index] + "</p><p><span class='triste'>Triste:</span> " + env.opt.values['serie2'][index] + "</p></div>";
+  		//return "<div class=&quot;label&quot;>September</div>";
+        // return "<div class='label'><p class='date'>September " + index + "</p><p><span class='contente'>Contente:</span>" + env.opt.values['serie1'][index] + "</p><p><span class='okay'>Okay:</span>" + env.opt.values['serie2'][index] + "</p><p><span class='preocupado'>Preocupado:</span>" + env.opt.values['serie3'][index] + "</p><p><span class='triste'>Triste:</span>" + env.opt.values['serie4'][index] + "</p></div>";
+        return "<p>" + label + "<br/>Contente: " + env.opt.values['serie1'][index] + "<br/>Okay: " + env.opt.values['serie2'][index] + "<br/>Preocupado: " + env.opt.values['serie3'][index] + "<br/>Triste: " + env.opt.values['serie4'][index] + "</p>";
     },
   series: {
     serie1: {
