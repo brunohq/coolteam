@@ -5,6 +5,12 @@ class Collaborator < ActiveRecord::Base
   attr_accessible :email, :unique_token
   before_create :assign_unique_token
 
+  def name
+    email_splited = self.email.split("@")
+    name = email_splited[0].split(".").map(&:capitalize).join(' ')
+
+  end
+
   private
 
   def assign_unique_token

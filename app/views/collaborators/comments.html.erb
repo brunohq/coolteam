@@ -1,14 +1,14 @@
 
 <div id="week_navigation" class="container">
 <%=  
-  link_to "#{image_tag("seta-back.png")}".html_safe, report_collaborators_path(@previous_week.strftime("%Y-%m-%d")), :title => "Semana Anterior"
+  link_to "#{image_tag("seta-back.png")}".html_safe, comments_collaborators_path(@previous_week.strftime("%Y-%m-%d")), :title => "Semana Anterior"
 %>
 
 <h1>Semana <%= @monday.strftime('%d %b') %> - <%= @friday.strftime('%d %b') %></h1>
 
 <%=  
   if @next_week 
-    link_to "#{image_tag("seta-next.png")}".html_safe, report_collaborators_path(@next_week.strftime("%Y-%m-%d")), :title => "Semana Seguinte"
+    link_to "#{image_tag("seta-next.png")}".html_safe, comments_collaborators_path(@next_week.strftime("%Y-%m-%d")), :title => "Semana Seguinte"
   end
 %>
 </div>
@@ -19,7 +19,7 @@
 	<% @team_moods.each do |(day, day_moods)| %>
       <div class="day_comments">
         
-        <div class="day"><%= day.strftime("%a, %d de %B")  %></div>
+        <div class="day"><%= day.strftime("%a, %d %B")  %></div>
         <hr />
 
         <div class="comments_list">
@@ -35,19 +35,7 @@
 
               <div class="rating">
                 <%= image_tag("legocons/" + mood.rating + ".png") %>
-                <p class="text-center"><%= mood.collaborator.email %></p>
-              </div>
-
-              <div class="comment">            
-                <%= mood.comment %>
-              </div>
-            </div>
-
-            <div class="mood_comment">
-
-              <div class="rating">
-                <%= image_tag("legocons/" + mood.rating + ".png") %>
-                <%= mood.collaborator.email %>
+                <p class="text-center"><%= mood.collaborator.name %></p>
               </div>
 
               <div class="comment">            
