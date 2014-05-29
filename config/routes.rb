@@ -6,6 +6,7 @@ Coolteam::Application.routes.draw do
 
   resources :collaborators do
     get 'report(/:date)', to: 'collaborators#report', :on => :collection, as: :report
+    get 'comments(/:date)', to: 'collaborators#comments', :on => :collection, as: :comments
     get 'stats(/:date)', to: 'collaborators#stats', :on => :collection, as: :stats
     resources :moods
   end

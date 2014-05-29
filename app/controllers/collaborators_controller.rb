@@ -25,6 +25,7 @@ class CollaboratorsController < ApplicationController
     current_mood = Mood.where(:date => @date).where(:collaborator_id=>@collaborator.id).first
     if current_mood
       @current_mood_rating = current_mood.rating
+      @current_mood_comment = current_mood.comment
     end
     @welcome_msg = welcome(@date.wday)
   end
@@ -94,6 +95,33 @@ class CollaboratorsController < ApplicationController
       (@monday..@friday).each_with_index do |date, index| 
         @my_moods[day_of_the_week(index)] = Mood.where("collaborator_id" => cookies.signed[:collaborator]).where(:date => date)
         @team_moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
+      end
+
+      if (@monday..@friday).cover?(Date.today)
+        @previous_week = (Date.today - 7.days).at_beginning_of_week
+      else
+        @previous_week = (d - 7.days).at_beginning_of_week
+        @next_week = (d + 7.days).at_beginning_of_week
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
+  def comments
+    if cookies.signed[:group].present?
+      if params[:date].present?
+        d = Date.parse(params[:date])
+      else
+        d = Date.today
+      end
+
+      @n_collaborators = Group.find(cookies.signed[:group]).collaborators.count
+      @monday = d.at_beginning_of_week
+      @friday = @monday + 4.days
+      @team_moods = Hash.new
+      @friday.downto(@monday) do |date| 
+        @team_moods[date] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).where("moods.comment IS NOT NULL")
       end
 
       if (@monday..@friday).cover?(Date.today)

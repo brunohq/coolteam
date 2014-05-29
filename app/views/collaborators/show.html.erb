@@ -38,7 +38,10 @@
           "triste", :title => "triste" , 
           :class => @current_mood_rating == "triste" ? 'change_mood selected_mood' : 'change_mood') 
         %>
+  </p>
 
+  <p>
+    <%= f.text_area :comment, :value => @current_mood_comment %>
   </p>
 
   <p id="mood_action">
@@ -93,6 +96,16 @@ a.change_mood.selected_mood {
 
 a.change_mood img {
   margin-bottom: 5px;
+}
+
+#new_mood textarea {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid #CCCCCC;
+  border-radius: 5px;
+  height: 90px;
+  margin-top: 40px;
+  padding: 10px;
+  width: 500px;
 }
   
 </style>
