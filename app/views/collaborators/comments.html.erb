@@ -25,7 +25,7 @@
         <div class="comments_list">
         <% if (day_moods.count == 0) %>
 
-          <p class="text-center">Não existe nenhum comentário esta semana.</p>
+          <p class="text-center">Não existe nenhum comentário neste dia.</p>
 
         <% else %>
 
@@ -94,8 +94,8 @@
   float: left;
   font-family: Josefin Sans;
   font-size: 1.2em;
-  height: 100px;
-  max-width: 500px;
+  min-height: 100px;
+  max-width: 485px;
   padding-left: 20px; 
 }
 </style>
