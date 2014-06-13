@@ -13,6 +13,9 @@
 %>
 </div>
 
+<div id="report_type" class="container">
+    <%= link_to "Overview", report_collaborators_path(@monday.strftime("%Y-%m-%d")), :title => "Overview" %> / <b>Timeline</b>
+</div>
 
 <div id="week_comments" class="container">
 
@@ -55,11 +58,16 @@
 
 <style type="text/css">
 #week_navigation {
-  margin: 20px auto;
+  margin: 20px auto 0;
   text-align: center;
 }
 #week_navigation h1 {
   display: inline-block;
+}
+#report_type{
+  font-size: 20px; 
+  text-align: center; 
+  margin-bottom: 30px;;
 }
 
 #week_comments{

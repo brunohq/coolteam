@@ -13,6 +13,10 @@
 %>
 </div>
 
+<div id="report_type" class="container">
+   <b>Overview</b> / <%= link_to "Timeline", comments_collaborators_path(@monday.strftime("%Y-%m-%d")), :title => "Timeline" %>
+</div>
+
 <div class="container">
 <% flash.each do |name, msg| %>
   <div class="alert alert-<%= name %>">
@@ -61,7 +65,13 @@
         weekly_counter[m.rating] += 1
         next if m == @my_moods[day][0]
       %>
-        <td><%= image_tag("legocons/" + m.rating + ".png", title: m.collaborator.name)  %> </td>
+        <% if m.comment != nil %>
+          <td class="has_comment">
+            <%= link_to "#{image_tag("legocons/" + m.rating + ".png", title: m.collaborator.name)}".html_safe, comments_collaborators_path(@monday.strftime("%Y-%m-%d")), :title => "Ver comentário de " + m.collaborator.name %>
+          </td>
+        <% else %>
+          <td><%= image_tag("legocons/" + m.rating + ".png", title: m.collaborator.name)  %> </td>
+        <% end %>
     <% end %>
 
     <% 
@@ -113,11 +123,16 @@
 
 <style type="text/css">
 #week_navigation {
-  margin: 20px auto;
+  margin: 20px auto 0;
   text-align: center;
 }
 #week_navigation h1 {
   display: inline-block;
+}
+#report_type{
+  font-size: 20px; 
+  text-align: center; 
+  margin-bottom: 30px;;
 }
 
 #week_moods {
@@ -145,6 +160,10 @@ tr > td {
 td.me{
   padding-right: 10px;
   border-right: 2px dashed #ccc;
+}
+
+td.has_comment{
+  background: url("/assets/pencil.png") no-repeat scroll right bottom rgba(0, 0, 0, 0)
 }
 
 #week_stats {
