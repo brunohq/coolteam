@@ -29,14 +29,12 @@ class GroupsController < ApplicationController
   end
 
   def notify
-    @collaborators = Collaborator.all
+    @collaborators = Group.first.collaborators #GetSkilled only
     @count = 0
 
     @collaborators.each do |collaborator|
-      #if user.owes_money?
-        CollaboratorMailer.daily_email(collaborator).deliver 
-        @count += 1
-      #end
+      CollaboratorMailer.daily_email(collaborator).deliver 
+      @count += 1
     end
   end
 
