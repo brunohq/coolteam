@@ -94,7 +94,7 @@ class CollaboratorsController < ApplicationController
       @team_moods = Hash.new
       (@monday..@friday).each_with_index do |date, index| 
         @my_moods[day_of_the_week(index)] = Mood.where("collaborator_id" => cookies.signed[:collaborator]).where(:date => date)
-        @team_moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).group("rating").count
+        @team_moods[day_of_the_week(index)] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).order("rating ASC")
       end
 
       if (@monday..@friday).cover?(Date.today)

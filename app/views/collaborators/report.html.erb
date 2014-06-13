@@ -32,7 +32,7 @@
       <th colspan="<%= @n_collaborators - 1 %>">Equipa</th>
     </tr>
 
-	<% 
+  <% 
     weekly_counter = Hash.new 0
     @team_moods.each_with_index do |(day, day_moods),index|
       n_moods = 0
@@ -57,19 +57,17 @@
         <% end %>
       </td>
 
-	  <% day_moods.each do |m| 
-        weekly_counter[m[0]] += m[1]
-        n_moods += m[1]
-        n_legos = m[0] == my_mood ? m[1] - 1 : m[1];
-        n_legos.times do
+    <% day_moods.each do |m| 
+        weekly_counter[m.rating] += 1
+        next if m == @my_moods[day][0]
       %>
-      	<td><%= image_tag("legocons/" + m[0] + ".png", alt: m[0])  %> </td>
-      <% end %>
-	  <% end %>
+        <td><%= image_tag("legocons/" + m.rating + ".png", title: m.collaborator.name)  %> </td>
+    <% end %>
 
     <% 
-       n_legos = my_mood == 'desconhecido' ? (@n_collaborators - n_moods) - 1 : (@n_collaborators - n_moods);
-       n_legos.times do %>
+       n_legos = my_mood == 'desconhecido' ? (@n_collaborators - day_moods.count) - 1 : (@n_collaborators - day_moods.count);
+       n_legos.times do 
+    %>
       <td><%= image_tag("legocons/desconhecido.png", alt: "desconhecido")  %> </td>
     <% end %>
 
