@@ -118,10 +118,10 @@ class CollaboratorsController < ApplicationController
 
       @n_collaborators = Group.find(cookies.signed[:group]).collaborators.count
       @monday = d.at_beginning_of_week
-      @friday = @monday + 4.days
+      @friday = [Date.today , @monday + 4.days].min
       @team_moods = Hash.new
       @friday.downto(@monday) do |date| 
-        @team_moods[date] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).where("moods.comment IS NOT NULL")
+        @team_moods[date] = Mood.includes(:collaborator).where("collaborators.group_id" => cookies.signed[:group]).where(:date => date).where("moods.comment <> ''")
       end
 
       if (@monday..@friday).cover?(Date.today)

@@ -65,7 +65,7 @@
         weekly_counter[m.rating] += 1
         next if m == @my_moods[day][0]
       %>
-        <% if m.comment != nil %>
+        <% if !m.comment.blank? %>
           <td class="has_comment">
             <%= link_to "#{image_tag("legocons/" + m.rating + ".png", title: m.collaborator.name)}".html_safe, comments_collaborators_path(@monday.strftime("%Y-%m-%d")), :title => "Ver comentário de " + m.collaborator.name %>
           </td>
